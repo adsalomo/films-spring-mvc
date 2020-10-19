@@ -7,4 +7,5 @@ Proyecto Spring MVC - Maria DB.
 * Apache Tomcat 8.5
 * Spring Boot 2.2.5
 * Thymeleaf
+* Maria DB 2.6.2
 
