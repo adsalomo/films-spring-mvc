@@ -44,9 +44,25 @@ public class MovieController {
         return "add-edit-movie";
     }
 
-    @RequestMapping(path = {"/create-movie"}, method = RequestMethod.POST)
-    public String editOrCreate(Movie movie) {
-        movieService.create(movie);
+    @RequestMapping(path = {"/create-edit-movie"}, method = RequestMethod.POST)
+    public String create(Movie movie) {
+        if (movie.getId() > 0) {
+            movieService.edit(movie, movie.getId());
+        } else {
+            movieService.create(movie);
+        }
+
+        return "redirect:/";
+    }
+
+    @RequestMapping(path = {"/cancel"})
+    public String cancel() {
+        return "redirect:/";
+    }
+
+    @RequestMapping(path = {"/delete-movie/{id}"})
+    public String delete(@PathVariable("id") Integer id) {
+        movieService.delete(id);
         return "redirect:/";
     }
 }

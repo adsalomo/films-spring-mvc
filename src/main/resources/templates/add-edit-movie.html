@@ -10,45 +10,97 @@
     <body>
         <div class="container">
             <div class="row">
-                <div class="col-lg-12">
-                    <form th:action="@{/create-movie}" th:object="${movie}" method="post">
-                        <div class="form-group">
-                            <label>Nombre</label>
-                            <input th:field="*{name}" placeholder="Nombre" type="text" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label>Descripción</label>
-                            <input th:field="*{description}" placeholder="Descripción" ype="text" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label>Imagen URL</label>
-                            <input th:field="*{image}" placeholder="Imagen URL" type="text" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label>Actores</label>
-                            <input th:field="*{actors}" placeholder="Actores" type="text" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label>Genero</label>
-                            <select th:field="*{genderId.id}" class="form-control">
+                <div class="col">
 
-                                <option th:each="gender : ${genders}"
-                                        th:value="${gender.id}" 
-                                        th:text="${gender.name}"
-                                        th:selected="false"
-                                        />
-                            </select>
+                    <div class="card">
+                        <div th:if="${movie.id == 0}" class="card-header">
+                           Crear Pelicula
                         </div>
-                         <div class="form-group">
-                            <label>Fecha estreno</label>
-                            <input th:field="*{releaseDate}" type="date" class="form-control">
+                        
+                        <div th:if="${movie.id > 0}" class="card-header">
+                           Editar Pelicula
                         </div>
-                        <div class="form-group">
-                            <label>Calificación</label>
-                            <input th:field="*{rating}" type="number" class="form-control">
+
+                        <div class="card-body">
+                            <form th:action="@{/create-edit-movie}" 
+                                  th:object="${movie}" method="post">
+
+                                <input type="hidden" id="id" th:field="*{id}">
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label>Nombre</label>
+                                            <input required th:field="*{name}" placeholder="Nombre" type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label>Descripción</label>
+                                            <input required th:field="*{description}" placeholder="Descripción" ype="text" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label>Imagen URL</label>
+                                            <input required th:field="*{image}" placeholder="Imagen URL" type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label>Actores</label>
+                                            <input required th:field="*{actors}" placeholder="Actores" type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label>Genero</label>
+                                            <select th:field="*{genderId.id}" class="form-control">
+                                                <option th:each="gender : ${genders}"
+                                                        th:value="${gender.id}" 
+                                                        th:text="${gender.name}"
+                                                        th:selected="false" />
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label>Fecha estreno</label>
+                                            <input required th:field="*{releaseDate}" type="date" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label>Calificación</label>
+                                            <input required th:field="*{rating}" type="number" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <button type="submit" class="btn btn-primary btn-block">Guardar</button>
+                                    </div>
+                                    <div class="col">
+                                        <a th:href="@{/cancel}" type="button" 
+                                           class="btn btn-secondary btn-block">Cancelar</a>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                        <button type="submit" class="btn btn-primary">Guardar</button>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>

@@ -10,29 +10,56 @@
     <body>
         <div class="container">
             <div class="row">
-                <div class="col-lg-12">
-                    <a href="/create" class="btn btn-primary">Nuevo registro</a>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <h3 th:if="${movies == null or movies.isEmpty()}">No existen registros</h3>
-                    <table th:if="${movies != null and !movies.isEmpty()}" class="table table-striped table-responsive-md">
-                        <thead>
-                            <tr>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Descripción</th>
-                                <th scope="col">Genero</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="movie : ${movies}">
-                                <td th:text="${movie.name}"></td>
-                                <td th:text="${movie.description}"></td>
-                                <td th:text="${movie.genderId.name}"></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header">
+                            Movies App
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="/create" class="btn btn-primary">Nuevo registro</a>
+                            </h5>
+
+                            <div class="row">
+                                <div class="col">
+                                    <p th:if="${movies == null or movies.isEmpty()}" 
+                                       class="card-text">No existen registros</p>
+                                    
+                                    <table th:if="${movies != null and !movies.isEmpty()}" 
+                                           class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Nombre</th>
+                                                <th>Descripción</th>
+                                                <th>Genero</th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="movie : ${movies}">
+                                                <td th:text="${movie.name}"></td>
+                                                <td th:text="${movie.description}"></td>
+                                                <td th:text="${movie.genderId.name}"></td>
+                                                <td>
+                                                    <a th:href="@{/edit/{id}(id=${movie.id})}" 
+                                                       class="btn btn-warning btn-sm">
+                                                        <i class="fa fa-pencil-alt"></i>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a th:href="@{/delete-movie/{id}(id=${movie.id})}" 
+                                                       class="btn btn-danger btn-sm">
+                                                        <i class="fa fa-times"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
