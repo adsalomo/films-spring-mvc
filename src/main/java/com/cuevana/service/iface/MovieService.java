@@ -1,5 +1,6 @@
 package com.cuevana.service.iface;
 
+import com.cuevana.dto.MovieDto;
 import com.cuevana.model.Movie;
 import java.util.List;
 
@@ -14,6 +15,20 @@ public interface MovieService {
      * @return  Lista de peliculas
      */
     List<Movie> getAll();
+    
+    /**
+     * Obtiene todas las peliculas
+     * @return 
+     * @throws java.lang.Exception 
+     */
+    List<MovieDto> findAll() throws Exception;
+    
+    /**
+     * Crea nueva pelicula
+     * @param movieDto Objeto Movie
+     * @throws java.lang.Exception
+     */
+    void create(MovieDto movieDto) throws Exception;
     
     /**
      * Crea nueva pelicula

@@ -1,5 +1,6 @@
 package com.cuevana.service.impl;
 
+import com.cuevana.dto.MovieDto;
 import com.cuevana.model.Gender;
 import com.cuevana.model.Movie;
 import com.cuevana.repository.GenderRepository;
@@ -80,12 +81,59 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Movie getMovieById(int id) {
-       Optional<Movie> movie = movieRepository.findById(id);
-       if (!movie.isPresent()) {
-           return new Movie();
-       } else {
-           return movie.get();
-       }
+        Optional<Movie> movie = movieRepository.findById(id);
+        if (!movie.isPresent()) {
+            return new Movie();
+        } else {
+            return movie.get();
+        }
+    }
+
+    @Override
+    public void create(MovieDto movieDto) throws Exception {
+        Optional<Gender> existsGender = this.genderRepository
+                .findById(movieDto.getGenderId());
+        if (!existsGender.isPresent()) {
+            throw new Exception("Genero no existe");
+        }
+        
+        Movie movie = new Movie();
+        movie.setName(movieDto.getName());
+        movie.setDescription(movieDto.getDescription());
+        movie.setImage(movieDto.getImage());
+        movie.setActors(movieDto.getActors());
+        movie.setRating(movieDto.getRating());
+        movie.setGenderId(existsGender.get());
+        movie.setReleaseDate(movieDto.getReleaseDate());
+        movie.setCreatedAt(LocalDateTime.now());
+        this.movieRepository.save(movie);
+    }
+
+    @Override
+    public List<MovieDto> findAll() throws Exception {
+        List<Movie> movies = new ArrayList<>();
+        this.movieRepository.findAll().forEach(movies::add);
+        if (movies.isEmpty()) {
+            throw new Exception("No existe informacion");
+        }
+        
+        List<MovieDto> moviesDtos = new ArrayList<>();
+        
+        for (Movie movie : movies) {
+            MovieDto movieDto = new MovieDto();
+            movieDto.setId(movie.getId());
+            movieDto.setName(movie.getName());
+            movieDto.setDescription(movie.getDescription());
+            movieDto.setImage(movie.getImage());
+            movieDto.setActors(movie.getActors());
+            movieDto.setReleaseDate(movie.getReleaseDate());
+            movieDto.setRating(movie.getRating());
+            movieDto.setGenderId(movie.getGenderId().getId());
+            movieDto.setGenderName(movie.getGenderId().getName());
+            moviesDtos.add(movieDto);
+        }
+        
+        return moviesDtos;
     }
 
 }
